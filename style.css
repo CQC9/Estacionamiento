@@ -1,0 +1,172 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Fuente base */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f1f5fb;
+    color: #333;
+}
+
+/* Header */
+header {
+    background-color: #173ea5;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo {
+    width: 150px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.subtitulo {
+    font-size: 0.85rem;
+    margin-top: 0.2rem;
+}
+
+/* Nav */
+.nav-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.nav-link {
+    background: white;
+    color: #173ea5;
+    padding: 0.6rem 1.2rem;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    background-color: #173ea5;
+    color: white;
+    border: 1px solid white;
+}
+
+/* Main */
+main {
+    padding: 2rem;
+}
+
+/* Formulario */
+.form-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.form-section h2 {
+    color: #173ea5;
+    margin-bottom: 0.5rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.form-grid label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+}
+
+.form-grid input,
+.form-grid select {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+}
+
+input[type="text"] {
+    text-transform: uppercase;
+}
+
+.form-buttons {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+}
+
+.btn-primary {
+    background-color: #173ea5;
+    color: white;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background-color: #0f2f7c;
+}
+
+.btn-secondary {
+    background-color: #ccc;
+    color: #333;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-secondary:hover {
+    background-color: #aaa;
+}
+
+
+.tabla-container {
+    padding: 5px;
+    overflow-x: auto;
+}
+
+table {
+    width: 80%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 0 3px rgba(0,0,0,0.05);
+    font-size: 0.85em;
+}
+
+thead {
+    background-color: #f1f3f4;
+}
+
+th, td {
+    border: 1px solid #d1d5db;
+    padding: 4px 6px;
+    text-align: left;
+    line-height: 1.2;
+}

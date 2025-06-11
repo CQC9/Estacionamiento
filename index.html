@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>ESTACIONAMIENTO</title>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <a href="index.html">
+                <img src="hospital.png" alt="Logo de la organización" class="logo">
+            </a>
+            <h2>ASIGNACION DE LUGARES DE ESTACIONAMIENTO</h2>
+        </div>
+        <nav class="nav-buttons">
+            <a href="index.html" class="nav-link">Registrar Empleado</a>
+            <a href="registros.html" class="nav-link">Ver Registros</a>
+        </nav> 
+    </header>
+
+    <main>
+    <section class="form-section"> 
+        <h2>➕ Nuevo Registro de Empleado</h2>
+        <p>Complete todos los campos para registrar un nuevo empleado y asignar espacio de estacionamiento</p>
+
+        <form id="registro-form">
+        <div class="form-grid">
+
+            <div>
+                <label>REGISTRO PATRONAL *</label>
+                <select name="RegistroPatronal" id="RegistroPatronal" required>
+                <option value="CLINICA">CLINICA</option>
+                <option value="GRUPO">GRUPO</option>
+                </select>
+            </div>
+
+            <div>
+                <label># NOMINA *</label>
+                <input type="text" name="Nomina" placeholder="EJ: 3552" id="Nomina" required>
+            </div>
+
+            <div>
+                <label>NOMBRE *</label>
+                <input type="text" name="Nombre" placeholder="EJ: JESUS SANCHEZ" id="Nombre" required>
+            </div>
+
+            <div>
+                <label>DEPARTAMENTO *</label>
+                <input type="text" name="Departamento" placeholder="EJ: ALMACEN" id="Departamento" required>
+            </div>
+
+            <div>
+                <label>MARCA *</label>
+                <select name="Marca" id="Marca" required>
+                <option value="AUDI">AUDI</option>
+                <option value="CADILAC">CADILAC</option>
+                <option value="CHEVROLET">CHEVROLET</option>
+                <option value="FORD">FORD</option>
+                <option value="HONDA">HONDA</option>
+                <option value="HYUNDAI">HYUNDAI</option>
+                <option value="KIA">KIA</option>
+                <option value="MAZDA">MAZDA</option>
+                <option value="MERCEDEZ BENZ">MERCEDEZ BENZ</option>
+                <option value="MINICOOPER">MINICOOPER</option>
+                <option value="NISSAN">NISSAN</option>
+                <option value="PEUGEOT">PEUGEOT</option>
+                <option value="RENAULT">RENAULT</option>
+                <option value="TOYOTA">TOYOTA</option>
+                <option value="VOLKSWAGEN">VOLKSWAGEN</option>
+                <option value="CHRYSLER">CHRYSLER</option>
+                </select>
+            </div>
+
+            <div>
+                <label>VEHÍCULO *</label>
+                <input type="text" name="Vehiculo" placeholder="EJ: VERSA" id="Vehiculo" required>
+            </div>
+            <div>
+                <label>MODELO *</label>
+                <input type="number" name="Modelo" placeholder="EJ: 2016" id="Modelo"  required>
+            </div>
+
+            <div>
+                <label>PLACAS *</label>
+                <input type="text" name="Placas" placeholder="EJ: EZ-1036-L" id="Placas" required>
+            </div>
+
+            <div>
+                <label>TIPO DE CALCAMONÍA *</label>
+                <select name="TipoCalcamonia" id="TipoCalcamonia" required>
+                <option value="TRABAJADOR">TRABAJADOR</option>
+                <option value="MEDICO">MEDICO</option>
+                <option value="JEFATURA">JEFATURA</option>
+                </select>
+            </div>
+
+            <div>
+                <label>NÚMERO DE CALCAMONÍA *</label>
+                <input type="number" name="NumeroCalcamonia" id="NumeroCalcamonia" required>
+            </div>
+
+
+            <div>
+                <label for="Fecha">FECHA DE REGISTRO</label>
+                <input type="text" id="Fecha" name="Fecha" readonly>
+            </div>
+
+            </div>
+
+            <div class="form-buttons">
+            <button type="reset" class="btn-secondary">LIMPIAR</button>
+            <button type="submit" class="btn-primary">+ REGISTRAR</button>
+            </div>
+
+        </form>
+        </section>
+    </main>
+
+<script src="script.js"></script>
+</body>
+</html>
