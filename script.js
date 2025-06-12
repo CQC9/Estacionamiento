@@ -1,5 +1,5 @@
 // === CONFIGURACIÓN GENERAL ===
-const SHEET_API_URL = 'https://script.google.com/macros/s/AKfycbz_PyXfJutuSlco6NmyLnz57xG6znIma2IW2U_b1UvmuYTAPLmaz-5sKEicQOS6yZBAtA/exec'; 
+const SHEET_API_URL = 'https://script.google.com/macros/s/AKfycbz_PyXfJutuSlco6NmyLnz57xG6znIma2IW2U_b1UvmuYTAPLmaz-5sKEicQOS6yZBAtA/exec';  
 
 // === REGISTRO DE EMPLEADOS === 
 if (window.location.pathname.includes("index.html") || window.location.pathname === "/" || window.location.pathname.endsWith("/")) {
@@ -36,8 +36,8 @@ if (window.location.pathname.includes("index.html") || window.location.pathname 
             Vehiculo: form.Vehiculo.value,
             Modelo: form.Modelo.value,
             Placas: form.Placas.value,
-            TipoCalcamonia: form.TipoCalcamonia.value,
-            NumeroCalcamonia: form.NumeroCalcamonia.value
+            TipoCalcomania: form.TipoCalcomania.value,
+            NumeroCalcomania: form.NumeroCalcomania.value
         };
 
         console.log('Enviando datos:', data);

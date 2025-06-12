@@ -7,7 +7,6 @@
     <title>ESTACIONAMIENTO</title>
 </head>
 <body>
-
     <header>
         <div class="logo-container">
             <a href="index.html">
@@ -20,15 +19,12 @@
             <a href="registros.html" class="nav-link">Ver Registros</a>
         </nav> 
     </header>
-
     <main>
     <section class="form-section"> 
         <h2>➕ Nuevo Registro de Empleado</h2>
         <p>Complete todos los campos para registrar un nuevo empleado y asignar espacio de estacionamiento</p>
-
         <form id="registro-form">
         <div class="form-grid">
-
             <div>
                 <label>REGISTRO PATRONAL *</label>
                 <select name="RegistroPatronal" id="RegistroPatronal" required>
@@ -36,22 +32,18 @@
                 <option value="GRUPO">GRUPO</option>
                 </select>
             </div>
-
             <div>
                 <label># NOMINA *</label>
                 <input type="text" name="Nomina" placeholder="EJ: 3552" id="Nomina" required>
             </div>
-
             <div>
                 <label>NOMBRE *</label>
                 <input type="text" name="Nombre" placeholder="EJ: JESUS SANCHEZ" id="Nombre" required>
             </div>
-
             <div>
                 <label>DEPARTAMENTO *</label>
                 <input type="text" name="Departamento" placeholder="EJ: ALMACEN" id="Departamento" required>
             </div>
-
             <div>
                 <label>MARCA *</label>
                 <select name="Marca" id="Marca" required>
@@ -73,7 +65,6 @@
                 <option value="CHRYSLER">CHRYSLER</option>
                 </select>
             </div>
-
             <div>
                 <label>VEHÍCULO *</label>
                 <input type="text" name="Vehiculo" placeholder="EJ: VERSA" id="Vehiculo" required>
@@ -82,39 +73,31 @@
                 <label>MODELO *</label>
                 <input type="number" name="Modelo" placeholder="EJ: 2016" id="Modelo"  required>
             </div>
-
             <div>
                 <label>PLACAS *</label>
                 <input type="text" name="Placas" placeholder="EJ: EZ-1036-L" id="Placas" required>
             </div>
-
             <div>
-                <label>TIPO DE CALCAMONÍA *</label>
-                <select name="TipoCalcamonia" id="TipoCalcamonia" required>
+                <label>TIPO DE CALCOMANÍA *</label>
+                <select name="TipoCalcomania" id="TipoCalcomania" required>
                 <option value="TRABAJADOR">TRABAJADOR</option>
                 <option value="MEDICO">MEDICO</option>
                 <option value="JEFATURA">JEFATURA</option>
                 </select>
             </div>
-
             <div>
-                <label>NÚMERO DE CALCAMONÍA *</label>
-                <input type="number" name="NumeroCalcamonia" id="NumeroCalcamonia" required>
+                <label>NÚMERO DE CALCOMANÍA *</label>
+                <input type="number" name="NumeroCalcomania" id="NumeroCalcomania" required>
             </div>
-
-
             <div>
                 <label for="Fecha">FECHA DE REGISTRO</label>
                 <input type="text" id="Fecha" name="Fecha" readonly>
             </div>
-
-            </div>
-
-            <div class="form-buttons">
+        </div>
+        <div class="form-buttons">
             <button type="reset" class="btn-secondary">LIMPIAR</button>
             <button type="submit" class="btn-primary">+ REGISTRAR</button>
-            </div>
-
+        </div>
         </form>
         </section>
     </main>
