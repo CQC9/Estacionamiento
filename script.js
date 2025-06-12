@@ -95,7 +95,7 @@ if (window.location.pathname.includes("registros.html")) {
                     const columnas = [
                         'Fecha', 'RegistroPatronal', 'Nomina', 'Nombre',
                         'Departamento', 'Marca', 'Vehiculo', 'Modelo',
-                        'Placas', 'TipoCalcamonia', 'NumeroCalcamonia'
+                        'Placas', 'TipoCalcomania', 'NumeroCalcomania'
                     ];
                     columnas.forEach(col => {
                         const td = document.createElement("td");
