@@ -1,5 +1,5 @@
 // === CONFIGURACIÓN GENERAL ===
-const SHEET_API_URL = 'https://script.google.com/macros/s/AKfycbz_PyXfJutuSlco6NmyLnz57xG6znIma2IW2U_b1UvmuYTAPLmaz-5sKEicQOS6yZBAtA/exec';  
+const SHEET_API_URL = 'https://script.google.com/macros/s/AKfycbzgJAAleZcH3AqDPrm779IZgKfcIsDbFV8Y-nF5FRZjnEJzHCNze5pGvxOdEZYcxYXxQw/exec';  
 
 // === REGISTRO DE EMPLEADOS === 
 if (window.location.pathname.includes("index.html") || window.location.pathname === "/" || window.location.pathname.endsWith("/")) {
@@ -24,6 +24,8 @@ if (window.location.pathname.includes("index.html") || window.location.pathname 
         const originalText = submitBtn.textContent;
         submitBtn.textContent = 'Guardando...';
         submitBtn.disabled = true;
+        console.log("TipoCalcomania:", document.getElementById("TipoCalcomania").value);
+        console.log("NumeroCalcomania:", document.getElementById("NumeroCalcomania").value);
 
         const data = {
             action: "add",
@@ -75,42 +77,46 @@ if (window.location.pathname.includes("registros.html")) {
 
     function cargarRegistros() {
         console.log('Cargando registros...');
-        
-        fetch(SHEET_API_URL + '?timestamp=' + Date.now()) 
+        fetch(SHEET_API_URL + '?timestamp=' + Date.now())
             .then(res => {
-                console.log('Respuesta GET:', res);
-                return res.json();
+            console.log('Respuesta GET:', res);
+            return res.json();
             })
             .then(data => {
-                console.log('Datos recibidos:', data);
-                tablaBody.innerHTML = "";
-                
-                if (!data || data.length === 0) {
-                    tablaBody.innerHTML = '<tr><td colspan="12">No hay registros disponibles</td></tr>';
-                    return;
-                }
-                
-                data.forEach((fila, index) => {
-                    const tr = document.createElement("tr");
-                    const columnas = [
-                        'Fecha', 'RegistroPatronal', 'Nomina', 'Nombre',
-                        'Departamento', 'Marca', 'Vehiculo', 'Modelo',
-                        'Placas', 'TipoCalcomania', 'NumeroCalcomania'
-                    ];
-                    columnas.forEach(col => {
-                        const td = document.createElement("td");
-                        const input = document.createElement("input");
-                        
-                        let valor = fila[col] || '';
-                        if (col === 'Fecha' && valor) {
-                            valor = formatearFecha(valor);
-                        }
-                        
-                        input.value = valor;
-                        input.disabled = true;
-                        input.dataset.col = col;
-                        td.appendChild(input);
-                        tr.appendChild(td);
+            console.log('Datos recibidos:', data);
+            tablaBody.innerHTML = "";
+            if (!data || data.length === 0) {
+                tablaBody.innerHTML = '<tr><td colspan="12">No hay registros disponibles</td></tr>';
+                return;
+            }
+
+        data.forEach((fila, index) => {
+            const tr = document.createElement("tr");
+
+          // === CAMBIO AQUÍ ===
+          // Se corrigió el orden y la inclusión de todas las columnas.
+          // Antes faltaban las dos últimas columnas.
+            const columnas = [
+                'Fecha', 'RegistroPatronal', 'Nomina', 'Nombre',
+                'Departamento', 'Marca', 'Vehiculo', 'Modelo',
+                'Placas', 'TipoCalcomania', 'NumeroCalcomania'
+            ];
+          // === FIN DEL CAMBIO ===
+
+            columnas.forEach(col => {
+                const td = document.createElement("td");
+                const input = document.createElement("input");
+                let valor = fila[col] || '';
+
+                    if (col === 'Fecha' && valor) {
+                        valor = formatearFecha(valor);
+                    }
+
+                    input.value = valor;
+                    input.disabled = true;
+                    input.dataset.col = col;
+                    td.appendChild(input);
+                    tr.appendChild(td);
                     });
                     // Botones de acción
                     const tdAcciones = document.createElement("td");
