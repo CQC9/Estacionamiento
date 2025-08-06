@@ -24,8 +24,6 @@ if (window.location.pathname.includes("index.html") || window.location.pathname 
         const originalText = submitBtn.textContent;
         submitBtn.textContent = 'Guardando...';
         submitBtn.disabled = true;
-        console.log("TipoCalcomania:", document.getElementById("TipoCalcomania").value);
-        console.log("NumeroCalcomania:", document.getElementById("NumeroCalcomania").value);
 
         const data = {
             action: "add",
@@ -54,7 +52,6 @@ if (window.location.pathname.includes("index.html") || window.location.pathname 
         })
         .then(response => {
             console.log('Respuesta recibida:', response);
-            // Corroborar que se envio
             alert("Empleado registrado correctamente.");
             form.reset();
             document.getElementById("Fecha").value = new Date().toLocaleDateString("es-MX");
@@ -64,76 +61,29 @@ if (window.location.pathname.includes("index.html") || window.location.pathname 
             alert("Error al registrar empleado. Intente nuevamente.");
         })
         .finally(() => {
-            // Restaurar botón
             submitBtn.textContent = originalText;
             submitBtn.disabled = false;
         });
     });
 }
 
-// === TABLA DE REGISTROS  ===
+// === TABLA DE REGISTROS ===
 if (window.location.pathname.includes("registros.html")) {
     const tablaBody = document.querySelector("#tablaRegistros tbody");
 
+    // ✅ FUNCIÓN PRINCIPAL - SOLO JSONP
     function cargarRegistros() {
-        console.log('Cargando registros...');
+        console.log('Cargando registros con JSONP...');
         
-        // ✅ SOLUCIÓN 1: Usar no-cors también para GET
-        fetch(SHEET_API_URL, {
-            method: 'GET',
-            mode: 'no-cors'
-        })
-        .then(response => {
-            console.log('Respuesta GET:', response);
-            // ⚠️ Con no-cors no podemos leer response.json()
-            // Necesitamos usar JSONP como alternativa
-            return cargarRegistrosJSONP();
-        })
-        .catch(error => {
-            console.error('Error al cargar registros:', error);
-            // Intentar con JSONP como fallback
-            return cargarRegistrosJSONP();
-        });
-    }
-
-    // ✅ SOLUCIÓN 2: Función JSONP como alternativa
-    function cargarRegistrosJSONP() {
-        return new Promise((resolve, reject) => {
-            // Crear función callback global
-            const callbackName = 'jsonp_callback_' + Date.now();
-            window[callbackName] = function(data) {
-                delete window[callbackName];
-                document.head.removeChild(script);
-                
-                console.log('Datos recibidos via JSONP:', data);
-                mostrarRegistros(data);
-                resolve(data);
-            };
-
-            // Crear script tag
-            const script = document.createElement('script');
-            script.src = SHEET_API_URL + '?callback=' + callbackName;
-            script.onerror = () => {
-                delete window[callbackName];
-                document.head.removeChild(script);
-                reject(new Error('Error al cargar JSONP'));
-            };
-            
-            document.head.appendChild(script);
-        });
-    }
-
-    // ✅ SOLUCIÓN 3: Función simplificada usando fetch directo (método recomendado)
-    function cargarRegistrosDirecto() {
-        console.log('Cargando registros...');
+        // Limpiar tabla mientras carga
+        tablaBody.innerHTML = '<tr><td colspan="12">Cargando registros...</td></tr>';
         
-        // Crear un script tag dinámico para evitar CORS
-        const script = document.createElement('script');
-        const callbackName = 'callback_' + Date.now();
+        // Crear nombre único para el callback
+        const callbackName = 'jsonp_callback_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
         
-        // Definir callback global
+        // Definir el callback global
         window[callbackName] = function(data) {
-            console.log('Datos recibidos:', data);
+            console.log('Datos recibidos via JSONP:', data);
             mostrarRegistros(data);
             
             // Limpiar
@@ -141,23 +91,48 @@ if (window.location.pathname.includes("registros.html")) {
             delete window[callbackName];
         };
         
-        // Configurar script
-        script.src = `${SHEET_API_URL}?callback=${callbackName}`;
+        // Crear y configurar script tag
+        const script = document.createElement('script');
+        script.src = SHEET_API_URL + '?callback=' + callbackName;
+        
         script.onerror = function() {
-            console.error('Error al cargar registros');
-            tablaBody.innerHTML = '<tr><td colspan="12">Error al cargar registros</td></tr>';
-            document.head.removeChild(script);
-            delete window[callbackName];
+            console.error('Error al cargar registros via JSONP');
+            tablaBody.innerHTML = '<tr><td colspan="12">Error al cargar registros. Verifique la conexión.</td></tr>';
+            
+            // Limpiar en caso de error
+            if (document.head.contains(script)) {
+                document.head.removeChild(script);
+            }
+            if (window[callbackName]) {
+                delete window[callbackName];
+            }
         };
+        
+        // Timeout de seguridad (10 segundos)
+        setTimeout(() => {
+            if (window[callbackName]) {
+                console.log('Timeout en carga de registros');
+                script.onerror();
+            }
+        }, 10000);
         
         document.head.appendChild(script);
     }
 
     function mostrarRegistros(data) {
+        console.log('Mostrando registros:', data);
         tablaBody.innerHTML = "";
         
+        // Verificar si hay datos
         if (!data || data.length === 0) {
             tablaBody.innerHTML = '<tr><td colspan="12">No hay registros disponibles</td></tr>';
+            return;
+        }
+
+        // Verificar si hay error en la respuesta
+        if (data.status === 'ERROR') {
+            console.error('Error del servidor:', data.message);
+            tablaBody.innerHTML = '<tr><td colspan="12">Error del servidor: ' + (data.message || 'Error desconocido') + '</td></tr>';
             return;
         }
 
@@ -193,11 +168,11 @@ if (window.location.pathname.includes("registros.html")) {
             tdAcciones.style.padding = "2px";
             
             const editarBtn = crearBoton("✎");
-            editarBtn.style.color="#173ea5";
+            editarBtn.style.color = "#173ea5";
             const guardarBtn = crearBoton("🖫", true);
-            guardarBtn.style.color="#000000"
+            guardarBtn.style.color = "#000000";
             const eliminarBtn = crearBoton("⌫");
-            eliminarBtn.style.color="#FF0000";
+            eliminarBtn.style.color = "#FF0000";
 
             editarBtn.onclick = () => {
                 tr.querySelectorAll("input").forEach(i => i.disabled = false);
@@ -223,6 +198,10 @@ if (window.location.pathname.includes("registros.html")) {
                 valores._row = fila._row;
                 valores.action = "edit";
 
+                // Deshabilitar botón mientras procesa
+                guardarBtn.disabled = true;
+                guardarBtn.textContent = "...";
+
                 fetch(SHEET_API_URL, {
                     method: "POST",
                     headers: { 'Content-Type': 'application/json' },
@@ -230,15 +209,20 @@ if (window.location.pathname.includes("registros.html")) {
                     mode: 'no-cors'
                 }).then(() => {
                     alert("Registro actualizado.");
-                    setTimeout(() => cargarRegistrosDirecto(), 100);
+                    setTimeout(() => cargarRegistros(), 500);
                 }).catch(error => {
                     console.error('Error al actualizar:', error);
                     alert("Error al actualizar registro.");
+                    guardarBtn.disabled = false;
+                    guardarBtn.textContent = "🖫";
                 });
             };
 
             eliminarBtn.onclick = () => {
                 if (confirm("¿Eliminar este registro?")) {
+                    eliminarBtn.disabled = true;
+                    eliminarBtn.textContent = "...";
+
                     fetch(SHEET_API_URL, {
                         method: "POST",
                         headers: { 'Content-Type': 'application/json' },
@@ -246,10 +230,12 @@ if (window.location.pathname.includes("registros.html")) {
                         mode: 'no-cors'
                     }).then(() => {
                         alert("Registro eliminado.");
-                        setTimeout(() => cargarRegistrosDirecto(), 1000);
+                        setTimeout(() => cargarRegistros(), 500);
                     }).catch(error => {
                         console.error('Error al eliminar:', error);
                         alert("Error al eliminar registro.");
+                        eliminarBtn.disabled = false;
+                        eliminarBtn.textContent = "⌫";
                     });
                 }
             };
@@ -314,6 +300,19 @@ if (window.location.pathname.includes("registros.html")) {
         return btn;
     }
 
-    // ✅ Usar la función directa al cargar
-    cargarRegistrosDirecto();
+    // ✅ INICIALIZAR - Cargar registros al inicio
+    console.log('Inicializando carga de registros...');
+    cargarRegistros();
+    
+    // ✅ AGREGAR BOTÓN DE RECARGA MANUAL (OPCIONAL)
+    const btnRecarga = document.createElement('button');
+    btnRecarga.textContent = '🔄 Recargar Registros';
+    btnRecarga.style.margin = '10px 0';
+    btnRecarga.onclick = cargarRegistros;
+    
+    // Insertar antes de la tabla si existe
+    const tabla = document.querySelector('#tablaRegistros');
+    if (tabla && tabla.parentNode) {
+        tabla.parentNode.insertBefore(btnRecarga, tabla);
+    }
 }
