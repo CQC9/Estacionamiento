@@ -1,5 +1,5 @@
 // === CONFIGURACIÓN GENERAL ===
-const SHEET_API_URL = 'https://script.google.com/macros/s/AKfycby30LIdXsKtp8YKjl2L0gpyP3_6143PMvGFdsrTcRConUdXlRRuTo90hqVCNa5Hmf53fg/exec';  
+const SHEET_API_URL = 'https://script.google.com/macros/s/AKfycbyGO8YrC53XGw2R2HuwmZ_9PIQ2BK621hJuuk0W6Qc1PDH6pMH2bQQnnCFPUW94_vZ_Kw/exec';  
 
 // === REGISTRO DE EMPLEADOS === 
 if (window.location.pathname.includes("index.html") || window.location.pathname === "/" || window.location.pathname.endsWith("/")) {
